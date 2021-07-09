@@ -29,6 +29,7 @@
         {% endfor %}
     </p>
 
+    {% if user.is_authenticated %}
     <p>
         <ul>
             <li><a href="{% url 'mvg:area_create' %}">栽培エリア(畝)を追加する</a></li>
@@ -38,4 +39,5 @@
         </ul>
     
     </p>
+    {% endif %}
 {% endblock %}
