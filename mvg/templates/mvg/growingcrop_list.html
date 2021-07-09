@@ -39,5 +39,9 @@
         </ul>
     
     </p>
+    {% else %}
+    <p>
+        <a class="button is-primary" href="{% url 'login' %}">ログインへ</a>
+    </p>
     {% endif %}
 {% endblock %}
