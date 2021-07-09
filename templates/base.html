@@ -5,33 +5,64 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"> -->
 
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <title>{% if request.path != '/' %}{% block title %}{% endblock %} | {% endif %}</title>
 </head>
 
 <body>
-    <header class="hero is-primary is-small">
-        <div class="hero-body">
+    <section class="hero is-primary is-small">
+    <!-- Hero head: will stick at the top -->
+        <div class="hero-head">
+            <nav class="navbar">
             <div class="container">
-                <h1 class="title"><a href="{% url 'mvg:growingcrop' %}">My Vegetable Garden</a></h1>
-                <nav>
-                    <ul>
+                <div class="navbar-brand">
+                <a class="navbar-item">
+                    <img src="{% static 'mvg/img/tomato.png' %}">
+                </a>
+                <span class="navbar-burger" data-target="navbarMenuHeroA">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+                </div>
+                <div id="navbarMenuHeroA" class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item is-active">
+                    Home
+                    </a>
+                    <a class="navbar-item">
+                    Examples
+                    </a>
+                    <a class="navbar-item">
+                    Documentation
+                    </a>
+                    <span class="navbar-item">
                         {% if user.is_authenticated %}
-                        <li class="act">{{ user }}</li>
-                        <li><a href="{% url 'logout' %}" class="logout">ログアウト</a></li>
+                        <span class="navbar-item">{{ user }}</span>
+                        <a class="button is-primary is-inverted" href="{% url 'logout' %}">
+                        <span class="icon">
+                        <i class="fab fa-github"></i>
+                        </span>
+                        <span>Logout</span>
+                        </a>
                         {% else %}
-                        <!-- <li><a href="{% url 'accounts:signup' %}" class="signup">Sign up</a></li> -->
-                        <li><a href="{% url 'login' %}" class="login">ログイン</a></li>
+                        <a class="button is-primary is-inverted" href="{% url 'login' %}">
+                        <span class="icon">
+                            <i class="fab fa-github"></i>
+                        </span>
+                        <span>Login</span>
+                        </a>
                         {% endif %}
-                        <!-- <li><a href="{% url 'mvg:growingcrop' %}" class="act">My Vegetable Garden</a></li> -->
-                    </ul>
-                </nav>
+                    </span>
+                </div>
+                </div>
             </div>
+            </nav>
         </div>
-    </header>
+    </section>
 
     <div class="section">
         <div class="container">
