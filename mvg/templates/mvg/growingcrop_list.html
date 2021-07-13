@@ -2,6 +2,12 @@
 {% block title %}My Vegetable Garden{% endblock %}
 
 {% block content %}
+<section class="section">
+    <h1 class="title">育てている野菜</h1>
+    <h2 class="subtitle">
+      ただいま<strong>栽培中の野菜</strong>一覧
+    </h2>
+  </section>
     {% regroup growingcrop_list by area as area_list %}
     <p>
         {% for area in area_list %}
