@@ -5,49 +5,86 @@
 <section class="section">
     <h1 class="title">育てている野菜</h1>
     <h2 class="subtitle">
-      ただいま<strong>栽培中の野菜</strong>一覧
+    ただいま<strong>栽培中の野菜</strong>一覧
     </h2>
-  </section>
-    {% regroup growingcrop_list by area as area_list %}
-    <p>
-        {% for area in area_list %}
-            <h1>栽培エリア(畝)：{{ area.grouper }}</h1>
-                {% regroup area.list by management_group as managementgroup_list %}
-                <ul class="box">
-                {% for managementgroup in managementgroup_list %}
+</section>
+
+{% regroup growingcrop_list by area as area_list %}
+<p>
+    {% for area in area_list %}
+        <h1>栽培エリア(畝)：{{ area.grouper }}</h1>
+            {% regroup area.list by management_group as managementgroup_list %}
+            <ul class="box">
+            {% for managementgroup in managementgroup_list %}
+                <p>
+                    <a href="{% url 'mvg:cropmanagement' managementgroup.grouper.pk %}">
+                        <h1>{{ managementgroup.grouper }}</h1>
+                    </a>
                     <p>
-                        <a href="{% url 'mvg:cropmanagement' managementgroup.grouper.pk %}">
-                            <h1>{{ managementgroup.grouper }}</h1>
-                        </a>
-                        <p>
-                            {% for growingcrop in managementgroup.list %}
-                                {{ growingcrop.variety }}
-                                <a href="{% url 'mvg:growingcrop_delete' growingcrop.pk %}">[-]</a>
-                                {% if not forloop.last %} | {% endif %}
-                            {% endfor %}
-                        </p>
-                        <a class="button is-primary is-small" href="{% url 'mvg:growingcrop_create' area_pk=area.grouper.pk managementgroup_pk=managementgroup.grouper.pk %}">
-                            育てる野菜を追加</a>
-                        {% if not forloop.last %}<hr>{% endif %}
-                        </p>
-                {% endfor %}
-                </ul>
+                        {% for growingcrop in managementgroup.list %}
+                            {{ growingcrop.variety }}
+                            <a href="{% url 'mvg:growingcrop_delete' growingcrop.pk %}">[-]</a>
+                            {% if not forloop.last %} | {% endif %}
+                        {% endfor %}
+                    </p>
+                    <a class="button is-primary is-small" href="{% url 'mvg:growingcrop_create' area_pk=area.grouper.pk managementgroup_pk=managementgroup.grouper.pk %}">
+                        育てる野菜を追加</a>
+                    {% if not forloop.last %}<hr>{% endif %}
+                    </p>
+            {% endfor %}
+            </ul>
+    {% endfor %}
+</p>
+
+
+<div class="columns is-multiline is-mobile">
+{% regroup growingcrop_list by area as area_list %}
+{% for area in area_list %}
+{% regroup area.list by management_group as managementgroup_list %}
+{% for managementgroup in managementgroup_list %}
+<div class="column is-one-quarter">
+<div class="card">
+    <header class="card-header">
+        <p class="card-header-title">
+            {{ managementgroup.grouper }}
+        </p>
+    </header>
+    <div class="card-content">
+        {% for growingcrop in managementgroup.list %}
+        <div class="content">
+        
+            {{ growingcrop.variety }}
+            <a href="{% url 'mvg:growingcrop_delete' growingcrop.pk %}">[-]</a>
+
+        <br>
+        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+        </div>
         {% endfor %}
-    </p>
 
-    {% if user.is_authenticated %}
-    <p>
-        <ul>
-            <li><a href="{% url 'mvg:area_create' %}">栽培エリア(畝)を追加する</a></li>
-            <li><a href="{% url 'mvg:managementgroup_create' %}">管理グループを追加する</a></li>
-            <li><a href="{% url 'mvg:vegetable_create' %}">野菜を追加する</a></li>
-            <li><a href="{% url 'mvg:varietie_create' %}">栽培品種を追加する</a></li>
-        </ul>
+    </div>
+    <footer class="card-footer">
+        <p class="card-footer-item">{{ area.grouper }}</p>
+        <a href="{% url 'mvg:cropmanagement' managementgroup.grouper.pk %}" class="card-footer-item">Edit</a>
+    </footer>
+</div>
+</div>
+{% endfor %}
+{% endfor %}
+</div>
 
-    </p>
-    {% else %}
-    <p>
-        <a class="button is-primary" href="{% url 'login' %}">ログインへ</a>
-    </p>
-    {% endif %}
+{% if user.is_authenticated %}
+<p>
+    <ul>
+        <li><a href="{% url 'mvg:area_create' %}">栽培エリア(畝)を追加する</a></li>
+        <li><a href="{% url 'mvg:managementgroup_create' %}">管理グループを追加する</a></li>
+        <li><a href="{% url 'mvg:vegetable_create' %}">野菜を追加する</a></li>
+        <li><a href="{% url 'mvg:varietie_create' %}">栽培品種を追加する</a></li>
+    </ul>
+
+</p>
+{% else %}
+<p>
+    <a class="button is-primary" href="{% url 'login' %}">ログインへ</a>
+</p>
+{% endif %}
 {% endblock %}
